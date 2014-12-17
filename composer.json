@@ -1,0 +1,23 @@
+{
+    "name": "dintel/php-github-webhook",
+    "description": "Simple class for handling GitHub webhook calls",
+    "version": "0.1.0",
+    "keywords": ["git","webhook"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Dmitry Zbarski",
+            "email": "dmitry.zbarski@gmail.com",
+            "homepage": "http://zbarski.info",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "GitHubWebhook\\": "src/"
+        }
+    }
+}
