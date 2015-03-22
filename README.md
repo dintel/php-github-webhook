@@ -33,7 +33,7 @@ require(__DIR__ . "/vendor/autoload.php");
 
 use GitHubWebhook\Handler;
 
-$handler = new Handler("<your secret>");
+$handler = new Handler("<your secret>", __DIR__);
 if($handler->handle()) {
     echo "OK";
 } else {
