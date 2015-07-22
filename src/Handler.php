@@ -65,16 +65,22 @@ class Handler
 
     public function validate()
     {
-        $headers = apache_request_headers();
+        $signature = @$_SERVER['HTTP_X_HUB_SIGNATURE'];
+        $event = @$_SERVER['HTTP_X_GITHUB_EVENT'];
+        $delivery = @$_SERVER['HTTP_X_GITHUB_DELIVERY'];
         $payload = file_get_contents('php://input');
 
-        if (!$this->validateSignature($headers['X-Hub-Signature'], $payload)) {
+        if (!isset($signature, $event, $delivery)) {
+            return false;
+        }
+
+        if (!$this->validateSignature($signature, $payload)) {
             return false;
         }
 
         $this->data = json_decode($payload,true);
-        $this->event = $headers['X-GitHub-Event'];
-        $this->delivery = $headers['X-GitHub-Delivery'];
+        $this->event = $event;
+        $this->delivery = $delivery;
         return true;
     }
 
