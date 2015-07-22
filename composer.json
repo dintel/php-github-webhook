@@ -1,7 +1,6 @@
 {
     "name": "dintel/php-github-webhook",
     "description": "Simple class for handling GitHub webhook calls",
-    "version": "0.1.1",
     "keywords": ["git","webhook"],
     "license": "BSD-3-Clause",
     "authors": [
