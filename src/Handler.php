@@ -87,7 +87,13 @@ class Handler
     protected function validateSignature($gitHubSignatureHeader, $payload)
     {
         list ($algo, $gitHubSignature) = explode("=", $gitHubSignatureHeader);
+
+        if ($algo !== 'sha1') {
+            // see https://developer.github.com/webhooks/securing/
+            return false;
+        }
+
         $payloadHash = hash_hmac($algo, $payload, $this->secret);
-        return ($payloadHash == $gitHubSignature);
+        return ($payloadHash === $gitHubSignature);
     }
 }
