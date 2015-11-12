@@ -59,7 +59,7 @@ class Handler
             return false;
         }
 
-        exec("git --work-tree={$this->gitDir} pull -f {$this->remote}", $this->gitOutput);
+        exec("git --work-tree={$this->gitDir} pull -f {$this->remote} 2>&1", $this->gitOutput);
         return true;
     }
 
