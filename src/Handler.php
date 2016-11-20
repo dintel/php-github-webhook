@@ -10,6 +10,7 @@ class Handler
     private $event;
     private $delivery;
     private $gitOutput;
+    private $gitExitCode;
 
     public function __construct($secret, $gitDir, $remote = null)
     {
@@ -53,14 +54,19 @@ class Handler
         return $this->secret;
     }
 
+    public function getGitExitCode()
+    {
+        return $this->gitExitCode;
+    }
+
     public function handle()
     {
         if (!$this->validate()) {
             return false;
         }
 
-        exec("git --work-tree={$this->gitDir} pull -f {$this->remote} 2>&1", $this->gitOutput);
-        return true;
+        exec("git -C {$this->gitDir} pull -f {$this->remote} 2>&1", $this->gitOutput, $this->gitExitCode);
+        return $this->gitExitCode == 0;
     }
 
     public function validate()
