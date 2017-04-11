@@ -74,10 +74,16 @@ class Handler
         $signature = @$_SERVER['HTTP_X_HUB_SIGNATURE'];
         $event = @$_SERVER['HTTP_X_GITHUB_EVENT'];
         $delivery = @$_SERVER['HTTP_X_GITHUB_DELIVERY'];
-        $payload = file_get_contents('php://input');
 
         if (!isset($signature, $event, $delivery)) {
             return false;
+        }
+
+        $payload = file_get_contents('php://input');
+
+        // Check if the payload is json or urlencoded.
+        if (strpos($payload, 'payload=') === 0) {
+            $payload = substr(urldecode($payload), 8);
         }
 
         if (!$this->validateSignature($signature, $payload)) {
